@@ -28,7 +28,7 @@
                     @csrf
                     {{-- {{ method_field('PUT') }} --}}
                     <input type="hidden" name="_method" value="PUT">
-                        <button type="submit" class="btn btn-primary">Add venue</button>
+                        <button type="submit" class="btn btn-primary">Edit venue</button>
                     </div>
 
 

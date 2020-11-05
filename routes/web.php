@@ -26,3 +26,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('venue', App\Http\Controllers\VenueController::class);
 
+
+Route::get('slot/create/{id}', [App\Http\Controllers\SlotController::class, 'create']);
+Route::resource('slot', App\Http\Controllers\SlotController::class);
+
