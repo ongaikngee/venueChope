@@ -21,6 +21,7 @@ class CreateSlotsTable extends Migration
             $table->float('duration', 2, 1);
             $table->timestamps();
 
+            // jon:to figure out later 
             // $table->foreign('venueID')->references('id')->on('venues')->onDelete('cascade');
         });
     }

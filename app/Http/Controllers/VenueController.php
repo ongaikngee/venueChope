@@ -35,7 +35,7 @@ class VenueController extends Controller
         // array_push($slots, $slot01, $slot02, $slot03, $slot04, $slot05, $slot06);
         // print_r($slots);
 
-        return view("venue.show", ['venues' => $venue, 'slots' => $slots]);
+        return view("venue.index", ['venues' => $venue, 'slots' => $slots]);
     }
 
     /**
@@ -84,7 +84,7 @@ class VenueController extends Controller
      */
     public function show(Venue $venue)
     {
-        return view('venue/delete', ['venue' => $venue]);
+        return view('venue.show', ['venue' => $venue]);
     }
 
     /**

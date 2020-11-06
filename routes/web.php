@@ -30,3 +30,7 @@ Route::resource('venue', App\Http\Controllers\VenueController::class);
 Route::get('slot/create/{id}', [App\Http\Controllers\SlotController::class, 'create']);
 Route::resource('slot', App\Http\Controllers\SlotController::class);
 
+
+Route::get('booking/create/{id}', [App\Http\Controllers\BookingController::class, 'create']);
+Route::resource('booking', App\Http\Controllers\BookingController::class);
+

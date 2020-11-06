@@ -4,71 +4,37 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
-                <div class="row">
-                    {{-- <a href="venue/create">Add Venue</a> --}}
-                    <ul class="list-group list-group-horizontal">
-                    <a href="/venue/create" class="list-group-item list-group-item-danger list-group-item-action">Add Venue</a>
-                    </ul>
-                </div>
-                <div class="row">
+                <h1>Welcome to delete page</h1>
+                <p>I am inside venue folder in show page</p>
+                <h1>{{ $venue->id }}</h1>
+                {{-- if-match=”q1w2e3r4t5” --}}
+                <form action="/venue/{{ $venue->id }}" method="POST">
 
-                    @foreach ($venues as $venue)
-                        <div class="card m-2" style="width:40vw;">
-                            <img src="/storage/{{ $venue->image }}" class="card-img-top" alt="VenueImage">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $venue->name }}</h5>
-                                <p class="card-text">{{ $venue->description }}</p>
 
-                                {{-- Display of slots --}}
+                    <h1>Are you sure you want to delete this venue?</h1>
+                    <h1>{{ $venue->name }}</h1>
+                    <p>{{ $venue->description }}</p>
+                    <img src="/storage/{{ $venue->image }}" alt="VenueImg">
+                    @csrf
+                    {{-- {{ method_field('DELETE') }} --}}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-danger" type="submit">Delete</button>
 
-                                <h5 class="card-title">Slots for booking</h5>
-                                <p class="card-text">
-                                <ul class="list-group">
-                                <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
-                                                Name
-                                                <span>Slot start time</span>
-                                                <span>Slot Duration</span>
-                                                <span class="badge badge-primary badge-pill">88</span>
-                                                <a href="/slot/create/{{$venue->id}}">add booking slots</a></a>
-                                            </li>
 
-                                    <?php $x = 0; $timestamp = time();  ?>
-                                    @foreach ($slots as $slot)
-                                        @if ($slot->venueID == $venue->id)
-                                            <?php $x++; ?>
+                    {{-- you need to use the proper form from bootstrap
+                    --}}
 
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                {{ $slot->description }}
-                                                {{-- <span>{{ date('h A', $slot->timing) }}</span> --}}
-                                                <span>{{$slot->timing}}</span>
-                                                <span>{{$slot->duration }} hour(s)</span>
-                                                <span class="badge badge-danger badge-pill"><a href="/slot/{{$slot->id}}/edit">Edit</a></span>
-                                                <span class="badge badge-danger badge-pill"><a href="/slot/{{$slot->id}}">Del</a></span>
-                                                <span class="badge badge-success badge-pill"><a href="#">Book</a></span>
-                                            </li>
-
-                                        @endif
-
-                                    @endforeach
-                                    @if ($x == 0)
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                No slots created yet!
-                                            </li>
-                                    @endif
-                                </p>
-
-                                {{-- Edit & Delete for Venue : Admin Access --}}
-                                <ul class="list-group list-group-horizontal">
-                                <a href="/venue/{{ $venue->id }}/edit" class="list-group-item list-group-item-danger list-group-item-action">Edit Venue</a>
-                                <a href="venue/{{ $venue->id }}" class="list-group-item list-group-item-danger list-group-item-action">Delete Venue</a>
-                                </ul>
-
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+                </form>
             </div>
         </div>
-    </div>
+
+        {{-- <div class="row">
+            <div class="col-12">
+                {!! Form::open(['method' => 'Delete', 'route' => ['venue.destroy', $id]]) !!}
+                <button type="submit" class="btn">Delete article</button>
+                {!! Form::close() !!}
+            </div>
+        </div> --}}
+
     </div>
 @endsection
