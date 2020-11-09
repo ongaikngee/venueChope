@@ -15,7 +15,7 @@
 
 
                         <label for="description">Description</label><br>
-                        <textarea rows="5" cols="100" name="description" placeholder="Enter venue's description"></textarea>
+                        <textarea rows="5" cols="50" name="description" placeholder="Enter venue's description"></textarea>
 
                     </div>
 

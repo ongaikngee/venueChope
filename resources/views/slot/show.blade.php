@@ -9,7 +9,7 @@
             <div class="card-body">
                 <h5 class="card-title">Venue: {{ $venue->name }} :: {{ $slot->description }}</h5>
                 <p class="card-text">
-                Start Time: {{ $slot->timing }}<br>
+                Start Time: {{ date('g A', strtotime($slot->timing)) }}<br>
                 Duration: {{ $slot->duration }}Hour(s)</p>
                 <form action="/slot/{{ $slot->id }}" enctype="multipart/form-data" method="post">
                     @csrf

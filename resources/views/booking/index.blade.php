@@ -9,11 +9,12 @@
                 
                 @foreach ($bookings as $booking)
 
-                    <div class="card mt-2" style="width: 18rem;">
+                    <div class="card mt-2" style="width: 30rem;">
                         <img src="/storage/{{ $booking->image }}" class="card-img-top" alt="VenueImage">
                         <div class="card-body">
-                            <h5 class="card-title">{{$booking->v_name}}::{{$booking->s_description}}</h5>
-                            <p class="card-text">Booking time: {{$booking->timing}}<br>
+                            <h5 class="card-title">{{$booking->v_name}} :: {{$booking->s_description}}</h5>
+                            {{-- <p class="card-text">Start time: {{$booking->timing}}<br> --}}
+                            <p class="card-text">Start time: {{date('g A', strtotime($booking->timing))}}<br>
                             Duration: {{$booking->duration}} hour(s)</p>
                             <a href="/booking/{{$booking->b_id}}" class="btn btn-secondary">Delete Booking</a>
                         </div>

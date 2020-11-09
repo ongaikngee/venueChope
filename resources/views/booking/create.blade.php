@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $venue->name }} :: {{$slot->description}}</h5>
                         <p class="card-text">
-                        Booking Start Time: {{ $slot->timing }}
+                        Start Time: {{ date('g A', strtotime($slot->timing)) }}
                             <br>Duration: {{ $slot->duration }} hour(s)
                         </p>
                         <form action="/booking" enctype="multipart/form-data" method="post">
