@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Slot;
+use App\Models\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,7 @@ class BookingController extends Controller
         $bookings = DB::table('bookings')
         ->leftJoin('slots', 'bookings.slotID', '=', 'slots.id')
         ->leftJoin('venues', 'slots.venueID', '=', 'venues.id')
-        ->select(DB::raw('bookings.*, slots.*,venues.*, bookings.id as b_id, venues.name as v_name'))
+        ->select(DB::raw('bookings.*, slots.*,venues.*, bookings.id as b_id, venues.name as v_name, slots.description as s_description'))
         ->where('bookings.userID', $user->id)
         ->orderBy('bookings.created_at','desc')
         ->get();
@@ -41,8 +42,9 @@ class BookingController extends Controller
     {
         $user = Auth::user();
         $slot = Slot::where('id', $slotID)->first();
+        $venue = Venue::where('id',$slot->venueID)->first();
     
-        return view('booking.create', ['slot' => $slot, 'user'=>$user]);
+        return view('booking.create', ['slot' => $slot, 'user'=>$user, 'venue'=>$venue]);
     }
 
     /**
@@ -71,12 +73,11 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
-        echo "welcome to show";
 
-        // $venue = Venue::where('id', $slot->venueID)->first();
-        // return view('booking/show', ['slot' => $slot, 'venue' => $venue]);
-        return view('booking/show',['booking' => $booking]);
+        $slot = Slot::where('id', $booking->slotID)->first();
+        $venue = Venue::where('id',$slot->venueID)->first();
+    
+        return view('booking/show',['booking' => $booking, 'slot'=>$slot, 'venue'=>$venue]);
     }
 
     /**

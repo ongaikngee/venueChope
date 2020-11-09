@@ -2,12 +2,13 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <h1>Welcome to create timeslot</h1>
-                <p>Creating booking slot for {{ $venue->name }}</p>
-
-
+        <div class="card">
+            <h4 class="card-header">
+                Add Booking Slot
+            </h4>
+            <div class="card-body">
+                <h5 class="card-title">Venue: {{ $venue->name }}</h5>
+                <p class="card-text">
                 <form action="/slot" enctype="multipart/form-data" method="post">
                     @csrf
                     <div class="form-group">
@@ -37,8 +38,9 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        {{-- jon: want this to be a drop down Done!--}}
-                         <label for="duration">Select Start Time</label>
+                        {{-- jon: want this to be a drop down
+                        Done!--}}
+                        <label for="duration">Select Start Time</label>
                         <select name="duration">
                             <option value="0.5">30 mins</option>
                             <option value="1">1 hour</option>
@@ -53,12 +55,7 @@
                         <input type="hidden" name="venueID" value={{ $venue->id }}>
                         <button type="submit" class="btn btn-primary">Add Booking Slots</button>
                     </div>
-
-
-
                 </form>
-
-            
             </div>
         </div>
     </div>

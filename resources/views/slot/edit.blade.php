@@ -2,19 +2,20 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <h1>Welcome to edit timeslot</h1>
-                <p>Venue: {{ $venue->name }}</p>
-                
+
+        <div class="card">
+            <h4 class="card-header">
+                Edit Booking Slot
+            </h4>
+            <div class="card-body">
+                <h5 class="card-title">Venue: {{ $venue->name }}</h5>
+                <p class="card-text">
                 <?php
                     //converting sql time to number
                     $time = $slot->timing;
                     $time = date("H",strtotime($time)); //extract the hour
                     $time = (int)$time; //convert to int
                 ?>
-
-
                 <form action="/slot/{{$slot->id}}" enctype="multipart/form-data" method="post">
                     @csrf
                     <div class="form-group">
