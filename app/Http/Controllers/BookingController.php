@@ -29,7 +29,6 @@ class BookingController extends Controller
         ->orderBy('bookings.created_at','desc')
         ->get();
 
-
         return view('booking.index', ['bookings' => $bookings]);
     }
 

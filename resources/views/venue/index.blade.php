@@ -94,7 +94,7 @@
                                 Admin access only
                             </h4>
                             <div class="card-body">
-                                <p>Admin access is a prevelige access. You are allow to:</p>
+                                <p>Admin access is a privilege access. You are allow to:</p>
                                 <ul>
                                 <li>Add/Edit/Delete Venues.</li>
                                 <li>Add/Edit/Delete Booking slots.</li>
@@ -166,17 +166,7 @@
                                                         
                                                         @guest
                                                         @else
-                                                            {{-- admin only --}}    
-                                                            @if (Auth::user()->usertype=='admin')
-                                                                <div>                                                   
-                                                                    <a href="/slot/{{ $slot->id }}/edit">
-                                                                        <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Edit Booking Slot"></i></a>
-                                                                    <a href="/slot/{{ $slot->id }}">
-                                                                        <i class="h4 far fa-calendar-times" data-toggle="tooltip" title="Delete Booking Slot"></i></a>
-                                                                </div>
-                                                            {{-- User only  --}}
-                                                            @elseif (Auth::user()->usertype=='user')
-                                                            {{-- Check if slots are taken --}}
+                                                            {{-- Check if any slots was booked by any users. --}}
                                                             <?php
                                                                 $isbooked = false;
                                                                 foreach ($bookings as $booking){
@@ -186,13 +176,31 @@
                                                                 }
                                                             ?>
 
+                                                            {{-- admin only --}}    
+                                                            @if (Auth::user()->usertype=='admin')
                                                                 <div>
-                                                                @if ($isbooked)
-                                                                    <p>Booked</p>
-                                                                @else
-                                                                    <a href="/booking/create/{{ $slot->id }}">
-                                                                        <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Book Slot"></i></a>
-                                                                @endif
+                                                                    @if ($isbooked)
+                                                                        <i class="h4 text-secondary far fa-calendar-check" data-toggle="tooltip" title="Slot Booked."></i>
+                                                                        <i class="h4 text-secondary far fa-calendar-times" data-toggle="tooltip" title="Slot Booked."></i>
+                                                                    @else                   
+                                                                        <a href="/slot/{{ $slot->id }}/edit">
+                                                                            <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Edit Booking Slot"></i></a>
+                                                                        <a href="/slot/{{ $slot->id }}">
+                                                                            <i class="h4 far fa-calendar-times" data-toggle="tooltip" title="Delete Booking Slot"></i></a>
+                                                                    @endif
+                                                                </div>
+                                                                
+                                                                
+                                                            {{-- User only  --}}
+                                                            @elseif (Auth::user()->usertype=='user')
+
+                                                                <div>
+                                                                    @if ($isbooked)
+                                                                        <p>Booked</p>
+                                                                    @else
+                                                                        <a href="/booking/create/{{ $slot->id }}">
+                                                                        <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Slot available for booking."></i></a>
+                                                                    @endif
                                                                 </div>
                                                             @endif
 

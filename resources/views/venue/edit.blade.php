@@ -15,11 +15,8 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label><br>
-                        <textarea rows="5" cols="100" name="description"
+                        <textarea rows="5" cols="50" name="description"
                             placeholder="Enter venue's description">{{ $venue->description }}</textarea>
-                        {{-- <input type="text" name="description"
-                            placeholder="Enter venue's description" value="{{ $venue->description }}">
-                        --}}
                     </div>
                     <div class="form-group">
                         <label for="image">Image</label><br>
@@ -29,7 +26,6 @@
 
                     <div class="form-group">
                         @csrf
-                        {{-- {{ method_field('PUT') }} --}}
                         <input type="hidden" name="_method" value="PUT">
                         <button type="submit" class="btn btn-primary">Edit venue</button>
                     </div>

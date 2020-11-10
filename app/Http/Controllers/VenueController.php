@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Slot;
+use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class VenueController extends Controller
 {
@@ -18,6 +20,15 @@ class VenueController extends Controller
      */
     public function index()
     {
+        //This is the 1st controller when the page is loaded
+        //Create the default Admin user here. 
+        $user = User::firstOrCreate(
+            ['email'=>'admin@venuechope.com'], 
+            ['name'=>'Administrator',
+            'password'=>Hash::make(12345678),
+            'usertype'=>'admin']
+        );
+
         //To get all records from the database for venue;
         $venue = Venue::all();
         // $slots = Slot::all();
@@ -102,13 +113,19 @@ class VenueController extends Controller
         $data = request()->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => ['required', 'image'],
+            // 'image' => ['required', 'image'],
         ]);
-        $imagePath = request('image')->store('uploads', 'public');
+
+
+        //Update the image if it is uploaded. 
+        if (request('image')!=""){
+            echo request('image');
+            $imagePath = request('image')->store('uploads', 'public');
+            $venue->image = $imagePath;
+        }
 
         $venue->name = request('name');
         $venue->description = request('description');
-        $venue->image = $imagePath;
 
         $saved = $venue->save();
         // if it saved, we send them to the venue page

@@ -25,7 +25,6 @@ class SlotController extends Controller
      */
     public function create($venueId)
     {
-        
         $venue = Venue::where('id', $venueId)->first();
         return view("slot.create", ['venue' => $venue]);
     }
@@ -48,10 +47,9 @@ class SlotController extends Controller
 
         //prepare the time
         $hour = request('timing');
-        // $timing = mktime($hour, 0, 0);
         $timing = $hour . ":00";
 
-
+        // Getting data 
         $slot->description = request('description');
         $slot->timing = $timing;
         $slot->duration = request('duration');
@@ -73,7 +71,6 @@ class SlotController extends Controller
      */
     public function show(Slot $slot)
     {
-        // jon:Do i need to have first()?
         $venue = Venue::where('id', $slot->venueID)->first();
         return view('slot/show', ['slot' => $slot, 'venue' => $venue]);
     }
@@ -86,7 +83,6 @@ class SlotController extends Controller
      */
     public function edit(Slot $slot)
     {
-        // jon:Do i need to have first()? :check out show(), edit()
         $venue = Venue::where('id', $slot->venueID)->first();
         return view('slot/edit', ['slot' => $slot, 'venue' => $venue]);
     }
@@ -108,9 +104,9 @@ class SlotController extends Controller
 
         //prepare the time
         $hour = request('timing');
-        // $timing = mktime($hour, 0, 0);
         $timing = $hour . ":00";
 
+        // Getting the updated data 
         $slot->description = request('description');
         $slot->timing = $timing;
         $slot->duration = request('duration');

@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Spicy+Rice&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="stylesheet" href="/css/stylesheet.css">
 
 
     <!-- Styles -->
@@ -43,7 +43,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <a class="nav-link" href="/"><img width="30px" src="images/beans.png" /> VenueChope</a>
+                        <a class="nav-link" href="/"><img width="30px" src="/images/beans.png" /> VenueChope</a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
