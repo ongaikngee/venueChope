@@ -64,7 +64,7 @@ return [
         //     ]) : [],
         // ],
 
-        // For Heroku 
+        // // For Heroku 
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
