@@ -4,15 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
-                {{-- <h1>The Count of booking is {{count($bookings)}}</h1>
-                @foreach ($bookings as $booking )
-                <p>Booking {{$booking->id}}</p>
-                <p>Booking {{$booking->userID}}</p>
-                <p>Booking {{$booking->slotID}}</p>
-                    
-                @endforeach --}}
                 @guest
                 {{-- When no login credential is found --}}
+                {{-- Ends at about line 81 --}}
                         <div class="container my-5">
                             <div class="row justify-content-center">
                                 <div class="h2">Login to VenueChope.com to start booking your venues.</div>
@@ -88,20 +82,22 @@
                 @else
                     
                     {{-- admin only  --}}
+                    {{-- To show an admin is login  --}}
                     @if (Auth::user()->usertype=='admin')
-                        <div class="card">
-                            <h4 class="card-header bg-danger">
-                                Admin access only
-                            </h4>
-                            <div class="card-body">
-                                <p>Admin access is a privilege access. You are allow to:</p>
+                        <div class = "row justify-content-center">
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">Administrator Previlege.</h4>
+                                <p>This access is a privilege access.<br> Please contact the administator if you are not authorise to access this.
+                                <br>Administrator Email : admin@venuechope.com</p>
+                            <hr>
+                                <p>You are allow to:</p>
                                 <ul>
-                                <li>Add/Edit/Delete Venues.</li>
-                                <li>Add/Edit/Delete Booking slots.</li>
+                                    <li>Add/Edit/Delete Venues.</li>
+                                    <li>Add/Edit/Delete Booking slots.</li>
+                                    <li>Edit/Delete Users.</li>
                                 </ul>
                             </div>
                         </div>
-                        
                         <div class="row m-1">
                             <ul class="list-group list-group-horizontal">
                                 <a href="/venue/create" class="list-group-item list-group-item-danger list-group-item-action">
@@ -109,33 +105,44 @@
                                 </a>
                             </ul>
                         </div>
-                        
                     @endif
                 @endguest
+                <div class="row m-1">
 
-                {{-- <div class="row d-flex flex-column flex-wrap justify-content-between"> --}}
-                <div class="row">
+                    {{-- if no venue is created  --}}
+                    @if (count($venues)==0)
+                        <div class="container my-5">
+                            <div class="alert alert-primary justify-content-center" role="alert">
+                            <h4 class="alert-heading">No venue created yet.</h4>
+                            <p>Click on the "Add Venue" button to create venues for booking. </p>
+                            </div>
+                        </div>
+
+                    {{-- Display all the venues in venues table  --}}
+                    @else
                         @foreach ($venues as $venue)
                             <div class="col-12 col-lg-6">
-                                {{-- <div class="card my-2 border border-secondary" style="width:33rem;"> --}}
                                 <div class="card my-2 border border-secondary">
                                     <img src="/storage/{{ $venue->image }}" class="card-img-top" alt="VenueImage">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $venue->name }}</h5>
                                         <p class="card-text">{{ $venue->description }}</p>
                                         <hr>
-                                        {{-- Display of slots --}}
-                                        <h5 class="card-title">Booking Slots</h5>
-                                        <p class="card-text">
-                                        <ul class="list-group">
-                                            <li
-                                                class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
-                                                <span>Name</span>
-                                                <span>Start time</span>
-                                                <span>Duration</span>
+                                        {{-- Displaying of Booking Slots table --}}
+                                        {{-- will end at about line 226  --}}
+                                        <strong>Booking Slots</strong>
+                                        <table class="table table-sm table-striped">
+                                        <thead class="thead-light">
+                                            <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Start Time</th>
+                                            <th scope="col">Duration</th>
+                                            <th scope="col">
                                                 @guest
                                                 @else 
                                                     {{-- admin only --}}  
+                                                    {{-- if admin is logged, a create booking slots button is display --}}
+                                                    {{-- if user us logged, Just a "Book" title is display  --}}
                                                     @if (Auth::user()->usertype=='admin')
                                                         <div>
                                                             <a href="/slot/create/{{ $venue->id }}">
@@ -145,103 +152,103 @@
                                                     @elseif (Auth::user()->usertype=='user')
                                                         <span>Book</span>
                                                     @endif
-                                                @endguest
-                                            </li>
-
-                                            <?php $x = 0; ?>
-                                        
+                                                @endguest</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{-- Get Slots information --}}
+                                            <?php $slotsCount = 0; ?>
                                             @foreach ($slots as $slot)
                                                 @if ($slot->venueID == $venue->id)
-                                                    <?php $x++; 
-                                                    ?>
-                                                
-
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        {{ $slot->description }}
+                                                    <?php $slotsCount++; ?>
+                                                    <tr>
+                                                        <th scope="row">{{ $slot->description }}</th>
+                                                        {{-- formatting the time. e.g from 08:00:00 to 8am  --}}
                                                         {{-- g in php show hour without leading zero --}}
-                                                        <span>{{date('g A', strtotime($slot->timing))}}</span>
-                                                        {{-- <span>{{ $slot->timing }}</span> --}}
-                                                        <span>{{ $slot->duration }} hour(s)</span>
-
-                                                        
-                                                        @guest
-                                                        @else
-                                                            {{-- Check if any slots was booked by any users. --}}
-                                                            <?php
-                                                                $isbooked = false;
-                                                                foreach ($bookings as $booking){
-                                                                    if (($slot->id == $booking->slotID)){
-                                                                        $isbooked = true;
+                                                        <td>{{date('g A', strtotime($slot->timing))}}</td>
+                                                        <td>{{ $slot->duration }} hour(s)</td>
+                                                        {{-- For action buttons --}}
+                                                        <td>
+                                                            @guest
+                                                            @else
+                                                                {{-- Check if any slots was booked by any users. --}}
+                                                                <?php
+                                                                    $isbooked = false;
+                                                                    foreach ($bookings as $booking){
+                                                                        if (($slot->id == $booking->slotID)){
+                                                                            $isbooked = true;
+                                                                        }
                                                                     }
-                                                                }
-                                                            ?>
+                                                                ?>
 
-                                                            {{-- admin only --}}    
-                                                            @if (Auth::user()->usertype=='admin')
-                                                                <div>
-                                                                    @if ($isbooked)
-                                                                        <i class="h4 text-secondary far fa-calendar-check" data-toggle="tooltip" title="Slot Booked."></i>
-                                                                        <i class="h4 text-secondary far fa-calendar-times" data-toggle="tooltip" title="Slot Booked."></i>
-                                                                    @else                   
-                                                                        <a href="/slot/{{ $slot->id }}/edit">
-                                                                            <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Edit Booking Slot"></i></a>
-                                                                        <a href="/slot/{{ $slot->id }}">
-                                                                            <i class="h4 far fa-calendar-times" data-toggle="tooltip" title="Delete Booking Slot"></i></a>
-                                                                    @endif
-                                                                </div>
-                                                                
-                                                                
-                                                            {{-- User only  --}}
-                                                            @elseif (Auth::user()->usertype=='user')
+                                                                {{-- different action button is display depending on user type. --}}
+                                                                {{-- Admin will get edit and delete action button. --}}
+                                                                {{-- User will get booking action button  --}}
 
-                                                                <div>
-                                                                    @if ($isbooked)
-                                                                        <p>Booked</p>
-                                                                    @else
-                                                                        <a href="/booking/create/{{ $slot->id }}">
-                                                                        <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Slot available for booking."></i></a>
-                                                                    @endif
-                                                                </div>
-                                                            @endif
-
-                                                        @endguest
-                                                    </li>
-
+                                                                {{-- admin only --}}    
+                                                                @if (Auth::user()->usertype=='admin')
+                                                                    <div>
+                                                                        @if ($isbooked)
+                                                                            <i class="h4 text-secondary far fa-calendar-check" data-toggle="tooltip" title="Slot Booked."></i>
+                                                                            <i class="h4 text-secondary far fa-calendar-times" data-toggle="tooltip" title="Slot Booked."></i>
+                                                                        @else                   
+                                                                            <a href="/slot/{{ $slot->id }}/edit">
+                                                                                <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Edit Booking Slot"></i></a>
+                                                                            <a href="/slot/{{ $slot->id }}">
+                                                                                <i class="h4 far fa-calendar-times" data-toggle="tooltip" title="Delete Booking Slot"></i></a>
+                                                                        @endif
+                                                                    </div>
+                                                                {{-- User only  --}}
+                                                                @elseif (Auth::user()->usertype=='user')
+                                                                    <div>
+                                                                        @if ($isbooked)
+                                                                            <p>Booked</p>
+                                                                        @else
+                                                                            <a href="/booking/create/{{ $slot->id }}">
+                                                                            <i class="h4 far fa-calendar-check" data-toggle="tooltip" title="Slot available for booking."></i></a>
+                                                                        @endif
+                                                                    </div>
+                                                                @endif
+                                                            @endguest
+                                                        </td>
+                                                    </tr>
                                                 @endif
-
                                             @endforeach
-                                            @if ($x == 0)
-                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                    No slots created yet!
-                                                </li>
+
+                                            {{-- Display if no slots is created in this venue  --}}
+                                            @if ($slotsCount == 0)
+                                                <tr>
+                                                    <td colspan="4">No booking slots created yet.</td>
+                                                </tr>
                                             @endif
-                                            </p>
-
-                                            {{-- admin only --}}
-                                            @guest
-                                            @else
-
-
-                                                @if (Auth::user()->usertype=='admin')
+                                        </tbody>
+                                        </table>
+                                        {{-- End of Booking Slots table --}}
+                                        {{-- Starts at about line 131 --}}
 
 
-                                                    <ul class="list-group list-group-horizontal">
-                                                        <a href="/venue/{{ $venue->id }}/edit"
-                                                            class="list-group-item list-group-item-danger list-group-item-action">
-                                                            <i class="h5 far fa-edit"></i>
-                                                            Edit Venue</a>
-                                                        <a href="venue/{{ $venue->id }}"
-                                                            class="list-group-item list-group-item-danger list-group-item-action @if($x!=0) disabled @endif">
-                                                            <i class="h5 far fa-trash-alt"></i>
-                                                            Delete Venue</a>
-                                                    </ul>
-                                                @endif
-                                            @endguest
-
+                                        {{-- Display of edit and delete Venue buttons  --}}
+                                        {{-- admin only --}}
+                                        @guest
+                                        @else
+                                            @if (Auth::user()->usertype=='admin')
+                                                <ul class="list-group list-group-horizontal">
+                                                    <a href="/venue/{{ $venue->id }}/edit"
+                                                        class="list-group-item list-group-item-danger list-group-item-action">
+                                                        <i class="h5 far fa-edit"></i>
+                                                        Edit Venue</a>
+                                                    <a href="venue/{{ $venue->id }}"
+                                                        class="list-group-item list-group-item-danger list-group-item-action @if($slotsCount!=0) disabled @endif">
+                                                        <i class="h5 far fa-trash-alt"></i>
+                                                        Delete Venue</a>
+                                                </ul>
+                                            @endif
+                                        @endguest
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+                    @endif
                 </div>
             </div>
         </div>

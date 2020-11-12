@@ -25,6 +25,7 @@ class SlotController extends Controller
      */
     public function create($venueId)
     {
+        // To create a booking slot, venueID is required to enter to Slots Table 
         $venue = Venue::where('id', $venueId)->first();
         return view("slot.create", ['venue' => $venue]);
     }
@@ -55,8 +56,6 @@ class SlotController extends Controller
         $slot->duration = request('duration');
         $slot->venueID = request('venueID');
 
-        // jon:Might want to check if slot exist
-        // jon: if slot exist, return alert, else save 
         $saved = $slot->save();
         if ($saved) {
             return redirect('/venue');

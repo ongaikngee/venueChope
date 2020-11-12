@@ -31,9 +31,6 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-info fixed-top">
             <div class="container">
-                {{-- <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a> --}}
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
@@ -66,9 +63,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right bg-info" aria-labelledby="navbarDropdown">
-                                    {{-- Added for show booking
-                                    --}}
-                                    <a class="dropdown-item" href="/booking">My Booking</a>
+                                    @if (Auth::user()->usertype == 'user')
+                                        <a class="dropdown-item" href="/booking">My Booking</a>
+                                    @elseif(Auth::user()->usertype == 'admin')
+                                        <a class="dropdown-item" href="/user">User Administration</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                  document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

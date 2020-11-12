@@ -14,7 +14,6 @@
                         <p class="card-text">{{ $venue->description }}</p>
                         <form action="/venue/{{ $venue->id }}" enctype="multipart/form-data" method="post">
                             @csrf
-
                             <div class="form-group">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-danger">Delete Venue</button>

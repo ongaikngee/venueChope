@@ -15,17 +15,12 @@
                         <p class="card-text">Start Time: {{ date('g A', strtotime($slot->timing)) }}
                             <br>Duration: {{ $slot->duration }} hour(s)
                         </p>
-                        {{-- <a href="#" class="btn btn-primary">Go somewhere</a>
-                        --}}
 
                         <form action="/booking/{{ $booking->id }}" enctype="multipart/form-data" method="post">
                             @csrf
 
                             <div class="form-group">
                                 <input type="hidden" name="_method" value="DELETE">
-                                {{--
-                                {{-- <input type="hidden" name="slotID" value={{ $slot->id }}>
-                                --}}
                                 <input type="hidden" name="id" value={{ $booking->id }}>
                                 <button type="submit" class="btn btn-danger">Delete Booking Slots</button>
                             </div>

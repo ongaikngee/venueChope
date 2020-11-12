@@ -23,7 +23,6 @@
                         <input type="text" name="description" placeholder="Enter name for slots" value="{{$slot->description}}">
                     </div>
                     <div class="form-group">
-                        {{-- jon: want this to be calerdar or time selector --}}
                         <label for="timing">Select Start Time</label>
                         <select name="timing">
                             <option @if ($time == 8){{"Selected"}} @endif value="8">8am</option>
@@ -44,7 +43,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        {{-- jon: want this to be a drop down --}}
                          <label for="duration">Select Start Time</label>
                         <select name="duration">
                             <option @if ($slot->duration == 0.5){{"Selected"}} @endif value="0.5">30 mins</option>

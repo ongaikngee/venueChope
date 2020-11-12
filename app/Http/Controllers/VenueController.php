@@ -7,7 +7,6 @@ use App\Models\Slot;
 use App\Models\User;
 use App\Models\Venue;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,12 +30,10 @@ class VenueController extends Controller
 
         //To get all records from the database for venue;
         $venue = Venue::all();
-        // $slots = Slot::all();
         $slots = DB::table('slots')
         ->orderBy('timing')
         ->get();
 
-        // should i join the booking with the slot?
         $bookings = Booking::all();
         return view("venue.index", ['venues' => $venue, 'slots' => $slots, 'bookings'=>$bookings]);
     }
@@ -113,7 +110,6 @@ class VenueController extends Controller
         $data = request()->validate([
             'name' => 'required',
             'description' => 'required',
-            // 'image' => ['required', 'image'],
         ]);
 
 

@@ -29,3 +29,6 @@ Route::resource('slot', App\Http\Controllers\SlotController::class);
 Route::get('booking/create/{id}', [App\Http\Controllers\BookingController::class, 'create']);
 Route::resource('booking', App\Http\Controllers\BookingController::class);
 
+//Mainly to show the User Administration Page
+Route::resource('user', App\Http\Controllers\UserController::class);
+

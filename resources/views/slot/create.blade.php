@@ -16,8 +16,6 @@
                         <input type="text" name="description" placeholder="Enter name for slots">
                     </div>
                     <div class="form-group">
-                        {{-- jon: want this to be calerdar or time selector
-                        --}}
                         <label for="timing">Select Start Time</label>
                         <select name="timing">
                             <option value="8">8am</option>
@@ -38,8 +36,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        {{-- jon: want this to be a drop down
-                        Done!--}}
                         <label for="duration">Select Start Time</label>
                         <select name="duration">
                             <option value="0.5">30 mins</option>

@@ -39,6 +39,8 @@ class BookingController extends Controller
      */
     public function create($slotID)
     {
+        // To create a booking, userID and slotID is required to enter to booking table
+        // Venue information is needed here to display to user the Venue's information on the booking.create.blade.php
         $user = Auth::user();
         $slot = Slot::where('id', $slotID)->first();
         $venue = Venue::where('id',$slot->venueID)->first();
