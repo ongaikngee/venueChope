@@ -123,7 +123,7 @@
                         @foreach ($venues as $venue)
                             <div class="col-12 col-lg-6">
                                 <div class="card my-2 border border-secondary">
-                                    <img src="/storage/{{ $venue->image }}" class="card-img-top" alt="VenueImage">
+                                    <img src="storage/{{ $venue->image }}" class="card-img-top" alt="VenueImage">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $venue->name }}</h5>
                                         <p class="card-text">{{ $venue->description }}</p>
