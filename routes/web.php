@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\venueController::class, 'index']);
+Route::get('/', [App\Http\Controllers\VenueController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('venue', App\Http\Controllers\VenueController::class);
