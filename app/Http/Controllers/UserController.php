@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Illuminate\Pagination\Paginator;
+// use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
@@ -16,7 +18,11 @@ class UserController extends Controller
     {
         $user = DB::table('users')
         ->orderBy('usertype')
-        ->get();
+        ->simplePaginate(5);
+        // ->get();
+
+        
+        
 
         $bookings = DB::table('bookings')->get();
         return view("user.index", ['users' => $user, 'bookings'=>$bookings]);
@@ -41,6 +47,14 @@ class UserController extends Controller
         if ($delete) {
             return redirect('/user');
         }
+    }
+
+
+    public function whattodo()
+    {
+
+        echo "Yes";
+
     }
 
 }

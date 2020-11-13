@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,3 +33,7 @@ Route::resource('booking', App\Http\Controllers\BookingController::class);
 //Mainly to show the User Administration Page
 Route::resource('user', App\Http\Controllers\UserController::class);
 
+
+//Laravel Socialite to github
+Route::get('login/github', [App\Http\Controllers\LoginController::class, 'redirectToProvider']);
+Route::get('login/github/callback', [App\Http\Controllers\LoginController::class, 'handleProviderCallback']);
